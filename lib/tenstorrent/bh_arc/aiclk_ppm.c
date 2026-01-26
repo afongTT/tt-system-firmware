@@ -70,11 +70,13 @@ static bool last_msg_busy;
 void SetAiclkArbMax(enum aiclk_arb_max arb_max, float freq)
 {
 	aiclk_ppm.arbiter_max[arb_max].value = CLAMP(freq, aiclk_ppm.fmin, aiclk_ppm.fmax);
+	// sys_trace_named_event("aiclk_arb_max_set", arb_max, aiclk_ppm.arbiter_max[arb_max].value);
 }
 
 void SetAiclkArbMin(enum aiclk_arb_min arb_min, float freq)
 {
 	aiclk_ppm.arbiter_min[arb_min].value = CLAMP(freq, aiclk_ppm.fmin, aiclk_ppm.fmax);
+	// sys_trace_named_event("aiclk_arb_min_set", arb_min, aiclk_ppm.arbiter_min[arb_min].value);
 }
 
 void EnableArbMax(enum aiclk_arb_max arb_max, bool enable)

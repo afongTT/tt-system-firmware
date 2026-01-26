@@ -100,7 +100,7 @@ static Throttler throttler[kThrottlerCount] = {
 	[kThrottlerTDC] = {
 			.arb_max = aiclk_arb_max_tdc,
 			.params = {
-					.alpha_filter = 0.1,
+					.alpha_filter = 0.001,
 					.p_gain = 0.2,
 					.d_gain = 0,
 				},
@@ -224,7 +224,8 @@ void InitThrottlers(void)
 
 	EnableArbMax(throttler[kThrottlerTDP].arb_max, !doppler);
 	EnableArbMax(throttler[kThrottlerFastTDC].arb_max, !doppler);
-	EnableArbMax(throttler[kThrottlerTDC].arb_max, !doppler);
+	bool tdc_enabled = tt_bh_fwtable_get_pcb_type(fwtable_dev) == PcbTypeP300 || !doppler;
+	EnableArbMax(throttler[kThrottlerTDC].arb_max, tdc_enabled);
 	EnableArbMax(throttler[kThrottlerBoardPower].arb_max, !doppler);
 
 	EnableArbMax(throttler[kThrottlerThm].arb_max, thermal_throttling);
