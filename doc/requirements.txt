@@ -27,3 +27,6 @@ anytree
 
 # Used to support both Markdown and reStructuredText in Sphinx
 myst_parser
+
+# Mermaid diagrams in RST (e.g. doc/architecture/smc_boot.rst)
+sphinxcontrib-mermaid
