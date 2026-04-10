@@ -13,18 +13,24 @@ controlled by ``include/tenstorrent/sys_init_defines.h``, and ``main()`` in ``ap
 High-level flow
 ===============
 
-.. mermaid::
+.. graphviz::
+   :caption: CMFW runtime path after reset (see :ref:`tt_z_p_bootloader` for ROM and MCUBoot detail)
 
-   flowchart LR
-      ROM["ROMBootloader"]
-      BootFs["tt_boot_fs"]
-      MCU["MCUBoot"]
-      Z["ZephyrKernel"]
-      Early["EARLY_SYS_INIT"]
-      PostK["POST_KERNEL_chain"]
-      Main["main"]
-      Loop["WatchdogLoop"]
-      ROM --> BootFs --> MCU --> Z --> Early --> PostK --> Main --> Loop
+   digraph smc_boot_overview {
+       rankdir=LR
+       node [shape=box];
+
+       ROM -> BootFS -> MCUBoot -> ZephyrKernel -> EarlyInit -> PostKernel -> main -> WatchdogLoop;
+
+       ROM [label="ROM bootloader"];
+       BootFS [label="tt_boot_fs"];
+       MCUBoot [label="MCUBoot"];
+       ZephyrKernel [label="Zephyr kernel"];
+       EarlyInit [label="EARLY SYS_INIT"];
+       PostKernel [label="POST_KERNEL chain"];
+       main [label="main()"];
+       WatchdogLoop [label="Watchdog loop"];
+   }
 
 Zephyr runs **EARLY**-phase ``SYS_INIT`` hooks first, then **POST_KERNEL** hooks in ascending
 priority order (lower numbers run first). The Tenstorrent boot banner uses ``POST_KERNEL`` priority
