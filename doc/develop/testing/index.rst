@@ -5,7 +5,9 @@ Hardware Testing
 
 This page documents support for executing tests on developer systems. These
 tests are also run on CI systems, but developers can execute them locally to
-debug failures or validate new testcases.
+debug failures or validate new testcases. :ref:`Continuous Integration
+Tests <ttzp_ci_tests>` lists which GitHub Actions workflows run those suites,
+and when.
 
 Prerequisites
 -------------
@@ -110,6 +112,8 @@ In order to execute stress tests, the following command can be used:
 Note that these tests can take up to 90 minutes to execute. To reduce their
 execution time, consider editing ``MAX_TEST_ITERATIONS`` in ``e2e_stress.py``
 to a lower value.
+
+.. _ttzp_manufacturing:
 
 Manufacturing Test
 ------------------
